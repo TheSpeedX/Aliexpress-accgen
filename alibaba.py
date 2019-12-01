@@ -22,6 +22,14 @@ def get_mail():
 	return name+"@2bin.ru"
 def get_pass(len):
 	return uuid.uuid4().hex.replace("-","")[0:len]
+def acc_exists(email):
+	url = "https://login.aliexpress.com:443/join/preCheckForRegister.htm?registerFrom=AE_MAIN_REGISTER&email="+email
+	#url = "https://login.aliexpress.com:443/join/preCheckForRegister.htm?registerFrom=AE_MAIN_REGISTER&umidToken=C1575133203514201298035791575228273407242106054&ua=121%23dHwlkCmXKjwlVlmTGVB9l9kGecznpuiIK3OAxxrIeMCyO3uZv3i1lUZYAcfdK5j9lGgY%2Bzp5pMl98A9Kf0DIllxmRcffK7jypnRJxaPIDgtlO3rJqRD5lwLYAcfdK5jVlmuY%2BzLIKM9VA3rnEkDIll9YOiEdKujlx4JCmojYlBCgebCs8ySm%2F0rWaOK0COe2CpxSpX0lk654M3BmbgibCN%2BXQ%2BnvNjOhnnCLR2b0CZeZ4jNN2lS0CNhFFtK0bZJinjxSpXb0C6048u%2FmCbiDkeHaF960C6ibnnC9pCi0CK4fVuTVM2jQb%2BEqQ1HlDZTOnn%2BH8giuCNzT831hbZs0vwwAVau9t5oX4qs2Z%2FxIlX%2FB%2B93jYwcWSXXhEPG7H4stTuYBpxaZV0rEe4H1DewwFdMF6f2Jf6Bkp9WHLcg4tGeulRulRx0inrW7DgvcJm6RMtpYtUYuntmQUeFB7FEo8umIvexlgUr0BG2eZ6ovA0L%2FfmM8pAXvn0D3QRouhHYb0ngzBlkb1tp%2B0Or0%2FxRWbPt7tH1JwYMzAKyBA9Yqwp6OwleQZylNfoYBur2w4nA82R4rofeRCbSKQGy0wbVtDot%2FIjefgP4gsrXpjOKmoshroClLjpQLhK53VSXbG0%2BnQlcdTKnknOBdimq21fs0KFc27ZTlzcvNa3GqHa%2Fh2QOuBhBOB6TeoR0jbJMCdO97q2T198q1eVLf2biDIxNQX8%2Ba8VzqFxO1a27j2ppJ0%2BaFfj6uj8Tv5JG1oLHpbPWJ25zH38TWLQhTtllxNXqNJCgTm4Ura8t3bUIFCo5HwPAm48kVFm3IitK2CauvdVWBCRGNFLp3ssNAOL6BV%2FdVrlsCpkCiMn0wp5I8MvPZDd7XC9lMKRowz3c5zA%2BXzZo3RZ9piDh9IJ9K5hL91O2YhJTdtiyr8MKqUp2%2FazMkiBzTbN7ycKfSLpvuoEXH6mIU5V7y1IrrhchobJTWhQmdEEh2cAA8XTMIF4B9AUlajTYIfsU36XuYiq6VTHrgOpZUFyl3%2BXb1F1mCP%2BXxoAZqgF7x%2B%2FlDrT19dxb%2FiobLWZ1zsPBRXGp5oYR1gXyxtw%3D%3D&email=hello1100@gmail.com"
+	#cookies = {"ali_apache_id": "10.182.250.129.157513276631.542536.9", "xman_us_f": "zero_order=y&x_locale=en_US&x_l=0&x_user=IN|IN|shopper|ifm|2289405277&acs_rt=7c572bcf0f55484591d665c6508fe404", "acs_usuc_t": "acs_rt=7c572bcf0f55484591d665c6508fe404&x_csrf=7u1id14otsjv", "intl_locale": "en_US", "aep_usuc_f": "site=glo&c_tp=USD&x_alimid=2289405277&isb=y&region=IN&b_locale=en_US", "intl_common_forever": "4CELkipbQLzVT5HzwIS1aw433644spDmjy4YILsRsEjbuRLglKw60A==", "xman_f": "j4iLnVm6Kl80sGH8Diy+J85DjCVHNN6bDQvDk/Ny84wfyvdQClt2XglolhIGZTnTf5XwgcDMssOJIVgTA57OqeElo04FowdWvRcwxpsASqFu5WsMhOVQn+4qApbmoEo6Zqq8ikieMRNwxzoQgy0lED4bCx8xqC6ebTMAXeGX9OrHt/RkXr86foXXd//5Ezn0I0BkIMK2kb/8YMjck4debpUbhwJPC7nI8phzFNAnZ3PviY7CSc5xSxgrYdx9wxdRX8xMC39lGbUD7ygRswiIerShf1qolIvVEMinu2guhfnzBCrHvSE+0ALCNCIzFkfclOj2clGmDvpJltED4Ljgdh+J+me9RMJ+RehrYl+RxQXsSZ0iBT/TIAikbki2wtURKUMqRottioQ=", "cna": "TB9oFlw5K1wCAXXt6Aicwjbc", "isg": "BHFxNaitiOTs8yT2XVK7PQA4g_3L9s4zdSz9h1ONrTh-eqHM8695oIzcnNa5qX0I", "l": "dBS2GVjqq5XmNsoUBOfamuIRXkbOrLd2DkPzw4ZIDICP_cBJo2BdWZKJreKvCn6NnsHVF35u5_48BrYUPyUIhpGAfRedVEbzodTh.", "_m_h5_tk": "29e00f71dcd063318a941c1aa84ffdf0_1575135111956", "_m_h5_tk_enc": "9252bbbb826eb1c4ea107191a3b2f6cb", "ali_apache_track": "mt=1|mid=in688525276pizae", "ali_apache_tracktmp": "W_signed=Y", "JSESSIONID": "5BBB5A20D4BE8436335956993805E5F2", "aep_common_f": "ni5szgMe40xedBZMu/TXCUBTylfQHldGupOc0c5WLPgkTN4rccSCYw==", "xman_t": "HDTi2svvhC1AoTNQiiM/X/ZuMCIhvfPZz0/Z18I/RTaFYQCIGrJ8fkzYa6DUQbr8GSrLCUob4YigQitVnjeJ/y0ODDe8SGcB", "_uab_collina": "157513320298812488366246", "_bl_uid": "jtkv73djlg0tdFnOt4hUob4v35RU", "re_ri_f": "/opC6sv+Rn1VBGvjS0IL/YUujFRvRaG8dHMgc7RR4NPKSXXOAcgMKdecMULNENaf"}
+	headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0", "Accept": "application/json, text/plain, */*", "Accept-Language": "en-US,en;q=0.5", "Accept-Encoding": "gzip, deflate", "DNT": "1", "Connection": "close", "Referer": "https://login.aliexpress.com/"}
+	#requests.get(url, headers=headers, cookies=cookies)
+	r=requests.get(url,headers=headers).text
+	return not '"isEmailExisted":false' in r
 def makeacc(mail,passw,proxy):
 	user_agent_list = [
    #Chrome
@@ -116,10 +124,10 @@ def isdead(proxy):
 def main():
 	n=int(input("Enter Number Accounts You Want: "))
 	combos=[]
-	if "n" in input("Do You Want To use Random Mail And Pass(Y/N): ").lower():
+	if "n" in input("Do You Want To use Random Mail And Pass(Y/n): ").lower():
 		fp=input("Please Provide A Mail Combo Path: ")
 		combos=re.findall(r'([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+[:][a-zA-Z0-9]+)',open(fp,"r").read())
-	if "n" in input("Do You Want To use Random Proxies(Y/N): ").lower():
+	if "n" in input("Do You Want To use Random Proxies(Y/n): ").lower():
 		fp=input("Please Provide A Mail Combo Path: ")
 		proxies=get_proxies(fp)
 	else:
@@ -128,9 +136,9 @@ def main():
 	used_mails=[]
 	c,i=0,0
 	proxies_pool=cycle(proxies)
-	while i<n:
+	while i<n and c<len(combos):
 		print("[+] Generating Account Number: ",i)
-		proxy = next(proxy_pool)
+		proxy = next(proxies_pool)
 		print("[!] Checking Proxy: ",proxy)
 		if isdead(proxy):
 			proxies.remove(proxy)
@@ -143,9 +151,14 @@ def main():
 			email,passw=get_mail(),get_pass(10)
 		if not email in used_mails:
 			c+=1
-			used_mails.append(email)	
-		if makeacc(email,passw,proxy):
-			i+=1
+			used_mails.append(email)
+		if acc_exists(email):
+			f=open("existing_"+datetime.now().strftime("%Y_%m_%d")+".txt","a")
+			f.write("Checked at "+str(datetime.strftime(datetime.now(),"%c"))+"\n"+email+" : "+passw+"\n")
+			f.close()
+		else:
+			if makeacc(email,passw,proxy):
+				i+=1
 	print("Accounts Have Been Generated !!!")
 print("""
 				Alibaba Account Generator 
