@@ -30,7 +30,7 @@ def acc_exists(email):
 	#requests.get(url, headers=headers, cookies=cookies)
 	r=requests.get(url,headers=headers).text
 	return not '"isEmailExisted":false' in r
-def makeacc(mail,passw,proxy):
+def makeacc(email,passw,proxy):
 	user_agent_list = [
    #Chrome
 	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
@@ -90,37 +90,34 @@ def makeacc(mail,passw,proxy):
 	element=driver.find_element_by_class_name("submit")
 	element.click()
 	sleep(4)
-	flag=driver.page_source.find("This email already exists.")!=-1
-	if flag:
-		f=open("generated_"+datetime.now().strftime("%Y_%m_%d")+".txt","a")
-		if proxy:
-			f.write("Generated at "+str(datetime.strftime(datetime.now(),"%c"))+" Used Proxy: "+proxy+"\n"+email+" : "+passw+"\n")
-		else:
-			f.write("Generated at "+str(datetime.strftime(datetime.now(),"%c"))+" Used Proxy: NONE\n"+email+" : "+passw+"\n")
-		f.close()
+	f=open("generated_"+datetime.now().strftime("%Y_%m_%d")+".txt","a")
+	if proxy:
+		f.write("Generated at "+str(datetime.strftime(datetime.now(),"%c"))+" Used Proxy: "+proxy+"\n"+email+" : "+passw+"\n")
 	else:
-		f=open("existing_"+datetime.now().strftime("%Y_%m_%d")+".txt","a")
-		f.write("Checked at "+str(datetime.strftime(datetime.now(),"%c"))+"\n"+email+" : "+passw+"\n")
-		f.close()
+		f.write("Generated at "+str(datetime.strftime(datetime.now(),"%c"))+" Used Proxy: NONE\n"+email+" : "+passw+"\n")
+	f.close()
+	input("Press Create Account Button And Press Enter..")
 	driver.quit()
-	return flag
+	return True
 def get_proxies(fname):
 	if not fname.strip()=="":
 		f=open(fname,"r")
 		dat=f.read()
 		f.close()
 	else:
-		dat=requests.get("http://spys.me/proxy.txt").text
+		dat=requests.get("https://api.proxyscrape.com/?request=getproxies&proxytype=http&timeout=2000&country=all&ssl=yes&anonymity=all").text
 	match=re.findall(r'\d+\.\d+\.\d+\.\d+:\d+',dat)
+	random.shuffle(match)
 	return match
 def isdead(proxy):
-	host,port=proxy.split(":")
+	return False
 	try:
-		requests.get(url,proxies={"http": proxy, "https": proxy},timeout=5)
+		requests.get("https://httpbin.org/ip",proxies={"http": proxy, "https": proxy},verify=False)
 		return False
 	except:
 		print("Skipping. Connnection error")
 		return True
+	# return requests.get("https://httpbin.org/ip",proxies={"http": proxy, "https": proxy},verify=False)
 def main():
 	n=int(input("Enter Number Accounts You Want: "))
 	combos=[]
@@ -136,8 +133,8 @@ def main():
 	used_mails=[]
 	c,i=0,0
 	proxies_pool=cycle(proxies)
-	while i<n and c<len(combos):
-		print("[+] Generating Account Number: ",i)
+	while i<n:
+		print("[+] Generating Account Number: ",i+1)
 		proxy = next(proxies_pool)
 		print("[!] Checking Proxy: ",proxy)
 		if isdead(proxy):
@@ -145,7 +142,7 @@ def main():
 			random.shuffle(proxies)
 			proxies_pool=cycle(proxies)
 			continue
-		if not len(combos)!=0:
+		if not len(combos)!=0 and c< len(combos):
 			email,passw=combos[c].split(":")
 		else:
 			email,passw=get_mail(),get_pass(10)
@@ -157,7 +154,7 @@ def main():
 			f.write("Checked at "+str(datetime.strftime(datetime.now(),"%c"))+"\n"+email+" : "+passw+"\n")
 			f.close()
 		else:
-			if makeacc(email,passw,proxy):
+			if makeacc(email,passw,""):
 				i+=1
 	print("Accounts Have Been Generated !!!")
 print("""
