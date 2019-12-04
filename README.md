@@ -3,4 +3,4 @@
 Generate Aliexpress Accounts With Selenium (GeckoDriver)
 
 ## TODO
-Add Proxies
+Automate MVErification on Fake Mails
