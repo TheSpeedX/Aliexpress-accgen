@@ -1,7 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 from time import sleep
-from selenium.webdriver.common.keys import Keys
 import uuid,requests
 import re,random
 from itertools import cycle
@@ -75,6 +75,7 @@ def makeacc(email,passw,proxy):
 		profile.set_preference("network.proxy.ftp_port",int(PROXY_PORT))
 		profile.set_preference("network.proxy.socks",PROXY_HOST)
 		profile.set_preference("network.proxy.socks_port",int(PROXY_PORT))
+	profile.setPreference("browser.privatebrowsing.autostart", true)
 	profile.set_preference("general.useragent.override", random.choice(user_agent_list))
 	profile.update_preferences()
 	driver = webdriver.Firefox(profile)
@@ -82,7 +83,7 @@ def makeacc(email,passw,proxy):
 	sleep(3)
 	element=driver.find_element_by_class_name("next-tabs-tab-inner")
 	element.click()
-	sleep(3)
+	sleep(1)
 	element=driver.find_element_by_class_name("email ")
 	element.send_keys(email)
 	element=driver.find_element_by_class_name("password ")
@@ -124,25 +125,31 @@ def main():
 	if "n" in input("Do You Want To use Random Mail And Pass(Y/n): ").lower():
 		fp=input("Please Provide A Mail Combo Path: ")
 		combos=re.findall(r'([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+[:][a-zA-Z0-9]+)',open(fp,"r").read())
-	if "n" in input("Do You Want To use Random Proxies(Y/n): ").lower():
-		fp=input("Please Provide A Mail Combo Path: ")
-		proxies=get_proxies(fp)
-	else:
-		print("Please Wait Generating Proxies....")
-		proxies=get_proxies("")
+	use_proxy=False
+	if "y" in input("Do You Want To use Proxies(y/N): ").lower():
+		use_proxy=True
+		if "n" in input("Do You Want To use Random Proxies(Y/n): ").lower():
+			fp=input("Please Provide A Mail Combo Path: ")
+			proxies=get_proxies(fp)
+		else:
+			print("Please Wait Generating Proxies....")
+			proxies=get_proxies("")
+		proxies_pool=cycle(proxies)
 	used_mails=[]
 	c,i=0,0
-	proxies_pool=cycle(proxies)
 	while i<n:
 		print("[+] Generating Account Number: ",i+1)
-		proxy = next(proxies_pool)
-		print("[!] Checking Proxy: ",proxy)
-		if isdead(proxy):
-			proxies.remove(proxy)
-			random.shuffle(proxies)
-			proxies_pool=cycle(proxies)
-			continue
-		if not len(combos)!=0 and c< len(combos):
+		if use_proxy:
+			proxy = next(proxies_pool)
+			print("[!] Checking Proxy: ",proxy)
+			if isdead(proxy):
+				proxies.remove(proxy)
+				random.shuffle(proxies)
+				proxies_pool=cycle(proxies)
+				continue
+		else:
+			proxy=""
+		if len(combos)!=0 and c< len(combos):
 			email,passw=combos[c].split(":")
 		else:
 			email,passw=get_mail(),get_pass(10)
@@ -154,7 +161,7 @@ def main():
 			f.write("Checked at "+str(datetime.strftime(datetime.now(),"%c"))+"\n"+email+" : "+passw+"\n")
 			f.close()
 		else:
-			if makeacc(email,passw,""):
+			if makeacc(email,passw,proxy):
 				i+=1
 	print("Accounts Have Been Generated !!!")
 print("""
