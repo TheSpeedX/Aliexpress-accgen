@@ -97,7 +97,7 @@ def makeacc(email,passw,proxy):
 	else:
 		f.write("Generated at "+str(datetime.strftime(datetime.now(),"%c"))+" Used Proxy: NONE\n"+email+" : "+passw+"\n")
 	f.close()
-	input("Press Create Account Button And Press Enter..")
+	#input("Press Create Account Button And Press Enter..")
 	driver.quit()
 	return True
 def get_proxies(fname):
