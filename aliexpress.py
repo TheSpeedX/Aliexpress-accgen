@@ -165,7 +165,7 @@ def main():
 				i+=1
 	print("Accounts Have Been Generated !!!")
 print("""
-				Alibaba Account Generator 
+				Aliexpress Account Generator 
 		By 
 
    ▄████████    ▄███████▄    ▄████████    ▄████████ ████████▄  ▀████    ▐████▀ 
