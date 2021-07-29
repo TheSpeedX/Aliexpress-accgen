@@ -75,7 +75,7 @@ def makeacc(email,passw,proxy):
 		profile.set_preference("network.proxy.ftp_port",int(PROXY_PORT))
 		profile.set_preference("network.proxy.socks",PROXY_HOST)
 		profile.set_preference("network.proxy.socks_port",int(PROXY_PORT))
-	profile.set_preference("browser.privatebrowsing.autostart", true)
+	profile.set_preference("browser.privatebrowsing.autostart", True)
 	profile.set_preference("general.useragent.override", random.choice(user_agent_list))
 	profile.update_preferences()
 	driver = webdriver.Firefox(profile)
